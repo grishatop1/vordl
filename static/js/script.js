@@ -1,5 +1,5 @@
 new fullpage('#fullpage', {
-    anchors: ["", "game"]
+    //anchors: ["", "game"]
 });
 fullpage_api.setAllowScrolling(false);
 

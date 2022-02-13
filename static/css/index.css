@@ -151,3 +151,11 @@
 .wrong-tipka {
     background-color: #1b1b1b;
 }
+
+
+@media screen and (max-width: 620px) {
+    .tipka {
+        width: 100%;
+        padding: 15px 0px;
+    }
+}

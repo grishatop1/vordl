@@ -115,3 +115,5 @@ dmypy.json
 
 #db
 *.db
+*.db
+database.db
