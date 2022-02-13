@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORDL</title>
+    <link rel="stylesheet" href="static/css/default.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.0/fullpage.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.0/fullpage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+    <div id="fullpage">
+        <div class="section active">
+            <div class="header">
+                <h1>VORDL</h1>
+                <p>Hej <span>{{username}}</span>! Stigao si do <span>{{level}}</span> LVL!</p>
+                
+                <div class="scoreboard">
+                    {% for item in scoreboard %}
+                        {% if item.username == username %}
+                            <div class="element" id="element-me">
+                                <span>{{loop.index}}. {{item.username}}</span>
+                                <span>Nivo: {{item.level}}</span>
+                            </div>
+                        {% else %}
+                            <div class="element">
+                                <span>{{loop.index}}. {{item.username}}</span>
+                                <span>Nivo: {{item.level}}</span>
+                            </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
+                
+                <button id="play">IGRAJ</button>
+            </div>
+        </div>
+
+
+        <div class="section" id="game-section">
+            <div class="level-display">
+                <p>Trenutni nivo: {{level}}</p>
+            </div>
+
+            <div class="game">
+
+            </div>
+
+            <div id="keyboard">
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/js/script.js"></script>
+</body>
+</html>

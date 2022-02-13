@@ -1,0 +1,16 @@
+{% extends "baseauth.html" %}
+{% block head %}
+    <title>Vordl - prijava</title>
+{% endblock %}
+
+    
+{% block contentForm %}
+
+    <div class="form">
+        <a href="/register">Nemam naloga</a>
+        <input type="text" id="username" placeholder="Unesi korisnicko ime" autocomplete="off">
+        <input type="text" id="password" placeholder="Unesi sifru" autocomplete="off">
+        <button id="login-btn">PRIJAVI SE</button>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,121 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header p {
+    color: white;
+}
+
+.header p span {
+    font-weight: bold;
+}
+
+.header button {
+    background-color: #af4caf;
+    color: white;
+    padding: 14px 20px;
+    margin: 15px 0;
+    width: 50%;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.scoreboard {
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #2a2a2a;
+    width: 80%;
+}
+
+.scoreboard .element {
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.scoreboard .element:nth-child(1) {
+    background-color: #FFD700 !important;
+    font-weight: bold;
+    text-shadow: 0px 0px 4px #000000;
+}
+
+.scoreboard .element:nth-child(2) {
+    background-color: #C0C0C0 !important;
+}
+
+.scoreboard .element:nth-child(3) {
+    background-color: #CD7F32 !important;
+}
+
+#element-me {
+    border: 2px solid white;
+}
+
+.level-display {
+    position: absolute;
+    top: 0;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.game {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 4px 4px;
+    grid-auto-flow: row;
+    width: 350px;
+    margin: 0px auto 100px auto;
+  }
+
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    border: 1px solid gray;
+    height: 70px;
+}
+
+#keyboard {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    margin-bottom: 20px;
+}
+
+.keyrow {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tipka {
+    padding: 15px;
+    background-color: #453946;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.tipka:hover {
+    background-color: #39303a;
+}
