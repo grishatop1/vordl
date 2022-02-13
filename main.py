@@ -75,20 +75,29 @@ def register():
     else:
         return render_template('register.html')
 
-@app.route('/checkword', methods=['POST'])
+@app.route('/checkWord', methods=['POST'])
 @login_required
 def checkword():
     user_level = current_user.current_level
     random.seed(user_level)
     word = random.choice(words)
     usr_word = request.form['word']
-    if word == word:
+
+    print(f"""
+        user level: {user_level}
+        secret word: {word}
+        user word: {usr_word}
+    """)
+
+    if usr_word == word:
+        current_user.current_level += 1
+        db.session.commit()
         return 'OK'
-    if word not in words:
+    if not usr_word in words:
         return 'NEMA'
 
     snd = ""
-    for i, letter in enumerate(word):
+    for i, letter in enumerate(usr_word):
         if letter == word[i]:
             snd += "!" # correct letter
         else:
@@ -118,4 +127,4 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

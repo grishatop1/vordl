@@ -68,15 +68,21 @@
     font-size: 20px;
 }
 
+/*GAME CANVAS*/
 .game {  
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 4px 4px;
-    grid-auto-flow: row;
-    width: 350px;
-    margin: 0px auto 100px auto;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.row-block {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: row;
+}
 
 .block {
     display: flex;
@@ -87,8 +93,30 @@
     font-size: 2em;
     border: 1px solid gray;
     height: 70px;
+    width: 60px;
+    margin: 3px;
+    text-transform: uppercase;
 }
 
+.correct {
+    background-color: #00ff00;
+    border: 1px solid #00ff00 !important;
+    border-radius: 5px;
+}
+
+.place {
+    background-color: #bbbe00;
+    border: 1px solid #bbbe00 !important;
+    border-radius: 5px;
+}
+
+.wrong {
+    border-radius: 5px;
+    background-color: gray;
+}
+
+
+/*KEYBOARD*/
 #keyboard {
     position: absolute;
     width: 100%;
@@ -118,4 +146,8 @@
 
 .tipka:hover {
     background-color: #39303a;
+}
+
+.wrong-tipka {
+    background-color: #1b1b1b;
 }
