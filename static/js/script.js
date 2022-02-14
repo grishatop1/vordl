@@ -14,6 +14,10 @@ for (var i = 0; i < rows; i++) {
         block.className = 'block';
         row.appendChild(block);
     }
+    var loadingsvg = document.createElement('img');
+    loadingsvg.src = "static/media/loading.svg";
+    loadingsvg.className = 'loadingsvg';
+    row.appendChild(loadingsvg);
     document.getElementsByClassName("game")[0].appendChild(row)
 }
 
@@ -59,7 +63,9 @@ var processing = false;
 function doLetter(letter) {
     var row = $(".game").children(":nth-child("+selected_row+")");
     if (letter == "enter") {
-        if (!processing && row_word.length == 5 && selected_row < 6) {
+        if (!processing && row_word.length == 5 && selected_row < 7) {
+            processing = true;
+            showLoadingSvg(row);
             $.post("/checkWord", {word: row_word}, function(data) {
                 if (data == "OK") {
                     row.children().addClass("correct");
@@ -84,7 +90,7 @@ function doLetter(letter) {
                     }
                     processing = false;
                 }
-                
+                hideLoadingSvg(row);
             });
         } else {
             
@@ -118,6 +124,13 @@ function putWord(row, word, data) {
             $("#kkk-"+word[i]).addClass("wrong-tipka")
         }
     }
+}
+
+function showLoadingSvg(row) {
+    $(row).children(".loadingsvg").css("visibility", "visible");
+}
+function hideLoadingSvg(row) {
+    $(row).children(".loadingsvg").css("visibility", "hidden");
 }
 
 function clearGame() {

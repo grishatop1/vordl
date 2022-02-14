@@ -109,7 +109,7 @@ def checkword():
     table = GameTable.query.filter_by(user_id=current_user.id, level=user_level).first()
     data = json.loads(table.data)
 
-    if len(data) > 5:
+    if len(data) > 6:
         return "DENIED"
 
     random.seed(user_level)
