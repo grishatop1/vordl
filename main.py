@@ -14,6 +14,8 @@ import os
 import json
 import random
 
+from matplotlib.style import use
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -32,13 +34,31 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % self.username
 
+class GameTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    level = db.Column(db.Integer, nullable=False)
+    data = db.Column(db.String(1000), nullable=False)
+
+@app.template_filter('to_json')
+def to_json(value):
+    return json.dumps(value)
+
 @app.route('/')
 @login_required
 def index():
+    user_table = GameTable.query.filter_by(
+        user_id=current_user.id
+        ).filter_by(level=current_user.current_level).first()
+    if user_table:
+        table = user_table.data
+    else:
+        table = "[]"
     return render_template('index.html', 
         level=current_user.current_level,
         username=current_user.username,
-        scoreboard=getTopTen()   
+        scoreboard=getTopTen(),
+        table=table
     )
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -79,6 +99,19 @@ def register():
 @login_required
 def checkword():
     user_level = current_user.current_level
+
+    table = GameTable.query.filter_by(user_id=current_user.id, level=user_level).first()
+    if not table:
+        new_table = GameTable(user_id=current_user.id, level=user_level, data="[]")
+        db.session.add(new_table)
+        db.session.commit()
+    
+    table = GameTable.query.filter_by(user_id=current_user.id, level=user_level).first()
+    data = json.loads(table.data)
+
+    if len(data) > 5:
+        return "DENIED"
+
     random.seed(user_level)
     word = random.choice(words)
     usr_word = request.form['word']
@@ -105,6 +138,12 @@ def checkword():
                 snd += "?" # wrong position
             else:
                 snd += "-" # wrong letter
+
+    data.append([usr_word, snd])
+    table.data = json.dumps(data)
+    db.session.commit()
+
+    
     return snd
 
 def getTopTen():

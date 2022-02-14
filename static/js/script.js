@@ -59,7 +59,7 @@ var processing = false;
 function doLetter(letter) {
     var row = $(".game").children(":nth-child("+selected_row+")");
     if (letter == "enter") {
-        if (!processing && row_word.length == 5) {
+        if (!processing && row_word.length == 5 && selected_row < 6) {
             $.post("/checkWord", {word: row_word}, function(data) {
                 if (data == "OK") {
                     row.children().addClass("correct");
@@ -108,7 +108,7 @@ function doLetter(letter) {
 
 function putWord(row, word, data) {
     for (var i = 0; i < data.length; i++) {
-        //?row.children(":nth-child("+(i+1)+")").html(word[i]);
+        row.children(":nth-child("+(i+1)+")").html(word[i]);
         if (data[i] == "!") {
             row.children(":nth-child("+(i+1)+")").addClass("correct");
         } else if (data[i] == "?") {
@@ -131,7 +131,19 @@ function clearGame() {
     $("#keyboard").find(".tipka").removeClass("wrong-tipka");
 }
 
+function fillGame() {
+    var row = -1;
+    for (row in table) {
+        var row = parseInt(row);
+        [word, data] = table[row];
+        var rowdiv = $(".game").children(":nth-child("+(row+1)+")");
+        putWord(rowdiv, word, data);
+    }
+    selected_row = parseInt(row)+2;
+}
+
 generateKeyboard()
+fillGame()
 
 $("#play").click(function(){
     fullpage_api.moveSectionDown();
