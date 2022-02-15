@@ -68,7 +68,7 @@ function doLetter(letter) {
             showLoadingSvg(row);
             $.post("/checkWord", {word: row_word}, function(data) {
                 if (data == "OK") {
-                    row.children().addClass("correct");
+                    row.children(".block").addClass("correct");
                     setTimeout(function() {
                         processing = false;
                         clearGame();
