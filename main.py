@@ -113,38 +113,80 @@ def checkword():
         return "DENIED"
 
     random.seed(user_level)
-    word = random.choice(words)
+    secret_word = random.choice(words)
     usr_word = request.form['word']
 
     print(f"""
         user level: {user_level}
-        secret word: {word}
+        secret word: {secret_word}
         user word: {usr_word}
     """)
 
-    if usr_word == word:
+    if usr_word == secret_word:
         current_user.current_level += 1
         db.session.commit()
         return '!!!!!'
     if not usr_word in words:
         return 'NEMA'
 
-    snd = ""
-    for i, letter in enumerate(usr_word):
-        if letter == word[i]:
-            snd += "!" # correct letter
-        else:
-            if letter in word:
-                snd += "?" # wrong position
-            else:
-                snd += "-" # wrong letter
+    letter_count = {}
+    #for each letter
+    for letter in secret_word:
+        #try to up its count
+        try: letter_count[letter]+=1
+        #if there's no count, start at 1
+        except: letter_count[letter]=1
+    #make a copy of the letter count for the green counting
+    #difference is, here we only count when we find a green
+    green_count = dict(letter_count)
 
-    data.append([usr_word, snd])
+    snd = []
+    for i, letter in enumerate(usr_word):
+        if letter == secret_word[i]:
+            snd.append("!") # correct letter
+            #down the count of that letter
+            green_count[letter] -= 1
+
+            #if there's still some of this letter to be found
+            if letter_count[letter]:
+                #one found, mark it off
+                letter_count[letter]-=1
+
+        elif letter in secret_word:
+            snd.append("?") # wrong position
+
+            #if there's still some of this letter to be found
+            if letter_count[letter]:
+                #one found, mark it off
+                letter_count[letter]-=1
+            #if there's zero remaining
+            else:
+                #change the false yellow to a grey
+                snd[i]="-"
+        else:
+            snd.append("-") # wrong letter
+        
+    #make a copy of snd to work on while looping through snd
+    snd_copy = list(snd)
+    #for each mark in snd
+    for s in snd:
+        #if that letter in our guess is in the correct word
+        if usr_word[snd.index(s)] in green_count:
+            #and we guessed all there is of that mark's letter
+            if green_count[usr_word[snd.index(s)]] == 0:
+                #if the mark is a yellow
+                if s == "?":
+                    #set it to grey
+                    snd_copy[snd.index(s)] = "-"
+                #i used nested ifs to limit width of code
+                #and increase readability
+
+
+    data.append([usr_word, "".join(snd_copy)])
     table.data = json.dumps(data)
     db.session.commit()
 
-    
-    return snd
+    return "".join(snd_copy)
 
 def getTopTen():
     users = User.query.order_by(User.current_level.desc()).limit(10).all()

@@ -4,7 +4,7 @@ new fullpage('#fullpage', {
 fullpage_api.setAllowScrolling(true);
 
 addSFX("effect1", "static/media/tap.mp3", 5);
-setSFXVolume(0.2, "effect1");
+setSFXVolume(0.4, "effect1");
 
 //GENERATE GAME CANVAS
 var rows = 6;
