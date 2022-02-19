@@ -166,3 +166,12 @@
         padding: 15px 0px;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .block {
+        height: 60px;
+        width: 50px;
+        font-size: 1.5em;
+    }
+    
+}
