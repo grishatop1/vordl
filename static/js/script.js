@@ -90,10 +90,12 @@ function doLetter(letter) {
                             nextLvl();
                             current_lvl++;
                             setNumberToElement($("#lvlcount")[0], current_lvl);
-                            addScore(selected_row);
                         }
                     }
                 });
+                if (data == "!!!!!") {
+                    addScore(selected_row);
+                }
                 for (var i = 0; i < row_word.length; i++) {
                     if(data[i] == "!") {
                         color = "#00ff00";
@@ -178,12 +180,11 @@ function setNumberToElement(elem, number) {
 }
 
 function addScore(sel_row) {
-    console.log(typeof(sel_row));
     if (sel_row == 1 || sel_row == 2) {
         score += 30
     } else if (sel_row == 3) {
         score += 20
-    } else if (sel_row < 6) {
+    } else if (sel_row < 7) {
         score += 10
     }
     setNumberToElement($("#score")[0], score);

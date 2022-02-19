@@ -202,12 +202,12 @@ def checkword():
     return "".join(snd_copy)
 
 def getTopTen():
-    users = User.query.order_by(User.current_level.desc()).limit(10).all()
+    users = User.query.order_by(User.current_score.desc()).limit(10).all()
     rank_list = []
     for user in users:
         rank_list.append({
             "username": user.username,
-            "level": user.current_level
+            "score": f'{user.current_score:,}'
         })
     return rank_list
 

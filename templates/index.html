@@ -27,19 +27,19 @@
         <div class="section active">
             <div class="header">
                 <h1>VORDL</h1>
-                <p>Hej <span>{{username}}</span>! Stigao si do <span>{{level}}</span> LVL!</p>
+                <p>Hej <span>{{username}}</span>! Imas <span>{{score}}</span> poen(a)!</p>
                 
                 <div class="scoreboard">
                     {% for item in scoreboard %}
                         {% if item.username == username %}
                             <div class="element" id="element-me">
                                 <span>{{loop.index}}. {{item.username}}</span>
-                                <span>Nivo: {{item.level}}</span>
+                                <span>Poeni: {{item.score}}</span>
                             </div>
                         {% else %}
                             <div class="element">
                                 <span>{{loop.index}}. {{item.username}}</span>
-                                <span>Nivo: {{item.level}}</span>
+                                <span>Poeni: {{item.score}}</span>
                             </div>
                         {% endif %}
                         
@@ -54,8 +54,7 @@
         <div class="section" id="game-section">
             <div class="game-section-wrapper">
                 <div class="level-display">
-                    <p>Trenutni nivo: <span id="lvlcount" style="display: inline-block;">{{level}}</span></p>
-                    <p>Skor: <span id="score" style="display: inline-block;">{{score}}</span></p>
+                    <p>TVOJ SKOR: <span id="score" style="display: inline-block;">{{score}}</span></p>
                 </div>
                 <div class="game"></div>
                 <div id="keyboard"></div>
