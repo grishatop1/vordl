@@ -88,10 +88,8 @@ function doLetter(letter) {
                                 processing = false;
                                 clearGame();
                                 current_lvl++;
-                                $(".level-display p").html(
-                                    "Trenutni nivo: " + current_lvl
-                                )
-                            }, 1200);
+                                nextLevelTextAnim(current_lvl);
+                            }, 500);
                         }
                     }
                 });
@@ -151,6 +149,29 @@ function doLetter(letter) {
             })
         }
     }
+}
+
+function nextLevelTextAnim(lvl) {
+    var tl = anime.timeline({
+        easing: 'linear',
+        duration: 200,
+        autoplay: true
+    });
+    tl.add({
+        targets: "#lvlcount",
+        translateY: [0, 20],
+        opacity: [1, 0],
+        complete: function() {
+            $(".level-display p span").html(
+                current_lvl
+            )
+        }
+    })
+    tl.add({
+        targets: "#lvlcount",
+        translateY: [-20, 0],
+        opacity: [0, 1],
+    })
 }
 
 function putWord(row, word, data) {
