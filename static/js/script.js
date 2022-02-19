@@ -107,9 +107,7 @@ function doLetter(letter) {
                         targets: row.find(":nth-child("+(i+1)+")")[0],
                         keyframes: [
                             {
-                                rotateX: 0,
-                            },
-                            {
+                                scale: 1,
                                 rotateX: 90,
                             },
                             {
