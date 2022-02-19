@@ -3,8 +3,8 @@ new fullpage('#fullpage', {
 });
 fullpage_api.setAllowScrolling(true);
 
-var tap = new Audio('static/media/tap.mp3');
-tap.volume = 0.4;
+addSFX("effect1", "static/media/tap.mp3", 5);
+setSFXVolume(0.2, "effect1");
 
 //GENERATE GAME CANVAS
 var rows = 6;
@@ -129,15 +129,15 @@ function doLetter(letter) {
             badWordAnimation(row);
         }
     } else if (letter == "backspace") {
-        if (row_word.length > 0) {
+        if (row_word.length > 0 && !processing) {
             selected_block--;
             var block = row.children(":nth-child("+selected_block+")")
             block.html("")
             row_word = row_word.substring(0, row_word.length - 1);
         }
     } else {
-        tap.play()
-        if (row_word.length < 5) {
+        if (row_word.length < 5 && !processing) {
+            playSFX("effect1");
             var block = row.children(":nth-child("+selected_block+")")
             block.html(letter)
             row_word += letter;
