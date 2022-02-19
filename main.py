@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(25), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=False)
     current_level = db.Column(db.Integer, default=1)
+    current_score = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -58,7 +59,8 @@ def index():
         level=current_user.current_level,
         username=current_user.username,
         scoreboard=getTopTen(),
-        table=table
+        table=table,
+        score=current_user.current_score
     )
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -124,6 +126,17 @@ def checkword():
 
     if usr_word == secret_word:
         current_user.current_level += 1
+
+        if (len(data) == 0 or len(data) == 1):
+            current_user.current_score += 30
+            print("got full score")
+        elif (len(data) == 2):
+            current_user.current_score += 20
+            print("got score for 3")
+        elif (len(data) < 6):
+            current_user.current_score += 10
+            print("got other score")
+
         db.session.commit()
         return '!!!!!'
     if not usr_word in words:
@@ -208,4 +221,5 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(host="0.0.0.0", debug=True)

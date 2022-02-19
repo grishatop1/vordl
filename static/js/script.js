@@ -89,7 +89,8 @@ function doLetter(letter) {
                         if (data == "!!!!!") {
                             nextLvl();
                             current_lvl++;
-                            nextLevelTextAnim(current_lvl);
+                            setNumberToElement($("#lvlcount")[0], current_lvl);
+                            addScore(selected_row);
                         }
                     }
                 });
@@ -153,27 +154,39 @@ function doLetter(letter) {
     }
 }
 
-function nextLevelTextAnim(lvl) {
+function setNumberToElement(elem, number) {
     var tl = anime.timeline({
         easing: 'linear',
         duration: 200,
         autoplay: true
     });
     tl.add({
-        targets: "#lvlcount",
+        targets: elem,
         translateY: [0, 20],
         opacity: [1, 0],
         complete: function() {
-            $(".level-display p span").html(
-                current_lvl
+            $(elem).html(
+                number
             )
         }
     })
     tl.add({
-        targets: "#lvlcount",
+        targets: elem,
         translateY: [-20, 0],
         opacity: [0, 1],
     })
+}
+
+function addScore(sel_row) {
+    console.log(typeof(sel_row));
+    if (sel_row == 1 || sel_row == 2) {
+        score += 30
+    } else if (sel_row == 3) {
+        score += 20
+    } else if (sel_row < 6) {
+        score += 10
+    }
+    setNumberToElement($("#score")[0], score);
 }
 
 function putWord(row, word, data) {
