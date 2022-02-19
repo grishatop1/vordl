@@ -1,7 +1,7 @@
 new fullpage('#fullpage', {
     //anchors: ["", "game"]
 });
-fullpage_api.setAllowScrolling(false);
+fullpage_api.setAllowScrolling(true);
 
 //GENERATE GAME CANVAS
 var rows = 6;
@@ -74,8 +74,7 @@ function doLetter(letter) {
                 }
                 var tl = anime.timeline({
                     easing: 'easeOutExpo',
-                    duration: 400,
-                    easing: 'linear',
+                    easing: 'easeOutSine',
                     autoplay: false,
                     complete: function() {
                         putWord(row, row_word, data);
@@ -84,12 +83,10 @@ function doLetter(letter) {
                         selected_row += 1;
                         processing = false;
                         if (data == "!!!!!") {
-                            setTimeout(function() {
-                                processing = false;
-                                clearGame();
-                                current_lvl++;
-                                nextLevelTextAnim(current_lvl);
-                            }, 500);
+                            processing = false;
+                            nextLvl();
+                            current_lvl++;
+                            nextLevelTextAnim(current_lvl);
                         }
                     }
                 });
@@ -103,6 +100,7 @@ function doLetter(letter) {
                     }
                     tl.add({
                         targets: row.find(":nth-child("+(i+1)+")")[0],
+                        duration: 450,
                         keyframes: [
                             {
                                 scale: 1,
@@ -115,7 +113,7 @@ function doLetter(letter) {
                                 borderRadius: 5,
                             }
                         ]
-                    });
+                    }, i*150);
                 }
                 tl.play();
 
@@ -208,15 +206,33 @@ function hideLoadingSvg(row) {
     $(row).children(".loadingsvg").css("visibility", "hidden");
 }
 
-function clearGame() {
+function nextLvl() {
     row_word = "";
     selected_block = 1;
     selected_row = 1;
-    $(".game").find(".block").html("");
-    $(".game").find(".block").removeClass("wrong");
-    $(".game").find(".block").removeClass("correct");
-    $(".game").find(".block").removeClass("place");
-    $(".game").find(".block").css({"background-color": "#212121", "border-color": "#808080", "border-radius": "0px"});
+    var tl = anime.timeline({
+        easing: 'easeInOutBack',
+        duration: 700,
+        autoplay: false
+    });
+    tl.add({
+        targets: ".game",
+        translateX: [0, -$(".row-block").width()],
+        opacity: [1, 0],
+        complete: function() {
+            $(".game").find(".block").html("");
+            $(".game").find(".block").removeClass("wrong");
+            $(".game").find(".block").removeClass("correct");
+            $(".game").find(".block").removeClass("place");
+            $(".game").find(".block").css({"background-color": "#212121", "border-color": "#808080", "border-radius": "0px"});
+        }
+    });
+    tl.add({
+        targets: ".game",
+        opacity: [0, 1],
+        translateX: [$(".row-block").width(), 0]
+    })
+    tl.play();
     $("#keyboard").find(".tipka").removeClass("wrong-tipka");
 }
 

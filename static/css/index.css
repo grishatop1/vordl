@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .header {
     display: flex;
     justify-content: center;
@@ -172,6 +176,11 @@
         height: 60px;
         width: 50px;
         font-size: 1.5em;
+    }   
+}
+
+@media screen and (max-height: 650px) {
+    .element {
+        padding: 2px !important;
     }
-    
 }
