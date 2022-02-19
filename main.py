@@ -111,8 +111,8 @@ def checkword():
     table = GameTable.query.filter_by(user_id=current_user.id, level=user_level).first()
     data = json.loads(table.data)
 
-    if len(data) > 6:
-        return "DENIED"
+    if len(data) == 5:
+        current_user.current_level += 1
 
     random.seed(user_level)
     secret_word = random.choice(words)

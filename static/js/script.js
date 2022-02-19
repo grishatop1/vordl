@@ -84,7 +84,9 @@ function doLetter(letter) {
                         putWord(row, row_word, data);
                         row_word = "";
                         selected_block = 1;
-                        selected_row += 1;
+                        if (selected_row < 7) {
+                            selected_row++;
+                        }
                         processing = false;
                         if (data == "!!!!!") {
                             nextLvl();
@@ -123,8 +125,10 @@ function doLetter(letter) {
                 }
                 tl.play();
 
-                if (selected_row > 6) {
-                    //game over
+                if (selected_row == 6) {
+                    setTimeout(function() {
+                        nextLvl()
+                    }, 1100);
                 }
                 hideLoadingSvg(row);
             });
