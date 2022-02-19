@@ -3,6 +3,9 @@ new fullpage('#fullpage', {
 });
 fullpage_api.setAllowScrolling(true);
 
+var tap = new Audio('static/media/tap.mp3');
+tap.volume = 0.4;
+
 //GENERATE GAME CANVAS
 var rows = 6;
 var cols = 5;
@@ -69,6 +72,7 @@ function doLetter(letter) {
             $.post("/checkWord", {word: row_word}, function(data) {
                 if (data == "NEMA") {
                     processing = false;
+                    hideLoadingSvg(row);
                     badWordAnimation(row);
                     return;
                 }
@@ -83,7 +87,6 @@ function doLetter(letter) {
                         selected_row += 1;
                         processing = false;
                         if (data == "!!!!!") {
-                            processing = false;
                             nextLvl();
                             current_lvl++;
                             nextLevelTextAnim(current_lvl);
@@ -120,8 +123,8 @@ function doLetter(letter) {
                 if (selected_row > 6) {
                     //game over
                 }
+                hideLoadingSvg(row);
             });
-            hideLoadingSvg(row);
         } else {
             badWordAnimation(row);
         }
@@ -133,6 +136,7 @@ function doLetter(letter) {
             row_word = row_word.substring(0, row_word.length - 1);
         }
     } else {
+        tap.play()
         if (row_word.length < 5) {
             var block = row.children(":nth-child("+selected_block+")")
             block.html(letter)
@@ -212,12 +216,12 @@ function nextLvl() {
     selected_row = 1;
     var tl = anime.timeline({
         easing: 'easeInOutBack',
-        duration: 700,
+        duration: 300,
         autoplay: false
     });
     tl.add({
         targets: ".game",
-        translateX: [0, -$(".row-block").width()],
+        translateX: [0, -50],
         opacity: [1, 0],
         complete: function() {
             $(".game").find(".block").html("");
@@ -230,7 +234,7 @@ function nextLvl() {
     tl.add({
         targets: ".game",
         opacity: [0, 1],
-        translateX: [$(".row-block").width(), 0]
+        translateX: [50, 0]
     })
     tl.play();
     $("#keyboard").find(".tipka").removeClass("wrong-tipka");

@@ -110,6 +110,7 @@
 }
 
 .loadingsvg {
+    display: inline-block;
     position: absolute;
     right: 0;
     transform: translateX(60px);
