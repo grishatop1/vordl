@@ -125,7 +125,7 @@ def checkword():
     if usr_word == word:
         current_user.current_level += 1
         db.session.commit()
-        return 'OK'
+        return '!!!!!'
     if not usr_word in words:
         return 'NEMA'
 

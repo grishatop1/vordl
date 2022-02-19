@@ -98,7 +98,7 @@
     color: white;
     font-weight: bold;
     font-size: 2em;
-    border: 1px solid gray;
+    border: 1px solid #808080;
     height: 70px;
     width: 60px;
     margin: 3px;
@@ -115,9 +115,9 @@
 }
 
 .correct {
-    background-color: #00ff00;
+    background-color: #00ff00 !important;
     border: 1px solid #00ff00 !important;
-    border-radius: 5px;
+    border-radius: 5px !important;
 }
 
 .place {
@@ -128,7 +128,7 @@
 
 .wrong {
     border-radius: 5px;
-    background-color: gray;
+    background-color: #808080;
 }
 
 .keyrow {
