@@ -32,6 +32,9 @@ class User(db.Model, UserMixin):
     current_level = db.Column(db.Integer, default=1)
     current_score = db.Column(db.Integer, default=0)
 
+    correct_words = db.Column(db.Integer, default=0)
+    incorrect_words = db.Column(db.Integer, default=0)
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -113,6 +116,7 @@ def checkword():
 
     if len(data) == 5:
         current_user.current_level += 1
+        current_user.incorrect_words += 1
 
     random.seed(user_level)
     secret_word = random.choice(words)
@@ -126,6 +130,7 @@ def checkword():
 
     if usr_word == secret_word:
         current_user.current_level += 1
+        current_user.correct_words += 1
 
         if (len(data) == 0 or len(data) == 1):
             current_user.current_score += 30
