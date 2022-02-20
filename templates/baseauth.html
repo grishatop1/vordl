@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="static/css/auth.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js" integrity="sha512-UvyokRh1Y5UESe/TZ6h+r5CvsOVzcX3CirAbCTBcLs5BxzIO8IhswbESIgvqwoAkxKszDB+JJTMSbVN6SKCN8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    
     {% block head %}
     {% endblock %}
 </head>
@@ -18,7 +25,7 @@
 
     <div class="container">
         <div class="header">
-            <h1>VORDL</h1>
+            <canvas id="txtcanvas" style="cursor: pointer;"></canvas>
             <p>Besplatna igrica sa 2,000 nivoa!</p>
         </div>
         {% block contentForm %}

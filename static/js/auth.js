@@ -92,3 +92,60 @@ function setNormal(txt) {
         txt
     )
 }
+
+w = 600
+h = 300
+
+var cnvs = document.getElementById("txtcanvas");
+const scene = new THREE.Scene();
+scene.background = new THREE.Color( 0x212121 );
+const light = new THREE.DirectionalLight( 0xffffff, 1 );
+light.position.set( 0, 0, 1 );
+scene.add( light );
+const camera = new THREE.PerspectiveCamera( 75, w / h, 0.1, 1000 );
+camera.position.z = 2;
+var renderer = new THREE.WebGLRenderer( { canvas: cnvs } );
+renderer.setSize( w, h );
+
+var model;
+const loader = new THREE.GLTFLoader();
+loader.load( 'static/media/txt.glb', function ( gltf ) {
+	model = gltf.scene;
+    var newMaterial = new THREE.MeshStandardMaterial({color: 0xffffff});
+    model.traverse((o) => {
+    if (o.isMesh) o.material = newMaterial;
+    scene.add(model);
+});
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
+
+
+//add orbit controls
+var controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
+controls.dampingFactor = 0.10;
+controls.minPolarAngle = -Math.PI / 2;
+controls.maxPolarAngle = Math.PI;
+controls.minAzimuthAngle = -Math.PI / 2;
+controls.maxAzimuthAngle = Math.PI / 2;
+
+controls.update()
+
+
+function animate() {
+
+    //rotate the text
+    if (model) {
+        //scale model with sinus function
+        model.scale.set(1 + Math.sin(Date.now() / 1000) / 10, 1 + Math.sin(Date.now() / 1000) / 10, 1 + Math.sin(Date.now() / 1000) / 10);
+    }
+
+    controls.update();
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+}
+animate();
