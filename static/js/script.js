@@ -3,9 +3,6 @@ new fullpage('#fullpage', {
 });
 fullpage_api.setAllowScrolling(true);
 
-addSFX("effect1", "static/media/tap.mp3", 5);
-setSFXVolume(0.4, "effect1");
-
 //GENERATE GAME CANVAS
 var rows = 6;
 var cols = 5;
@@ -144,7 +141,6 @@ function doLetter(letter) {
         }
     } else {
         if (row_word.length < 5 && !processing) {
-            playSFX("effect1");
             var block = row.children(":nth-child("+selected_block+")")
             block.html(letter)
             row_word += letter;
