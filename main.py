@@ -15,7 +15,7 @@ import json
 import random
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zretbbioozpemg:7d500614e8a90202288991b7d417955b91743d4b911d5515c0f48acbe0170ccc@ec2-52-208-185-143.eu-west-1.compute.amazonaws.com:5432/d1v52ej5uske8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.urandom(12)
 db = SQLAlchemy(app)
